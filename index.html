@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChatNest</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="authScreen">
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="authBox">
+    <div class="logo">💬</div>
+    <h1>ChatNest</h1>
+    <p class="sub" id="authSub">Welcome back! Please log in.</p>
+    <input type="text" id="nameInput" placeholder="Full name" class="hidden">
+    <input type="email" id="emailInput" placeholder="Email address">
+    <input type="password" id="passInput" placeholder="Password (min. 6 characters)">
+    <div id="authError"></div>
+    <button class="mainBtn" id="authBtn">Log in</button>
+    <p class="switchText"><span id="switchLink">Create a new account</span></p>
+  </div>
+</div>
+
+<div id="lightbox" class="hidden"><img id="lightboxImg" src=""></div>
+<div id="modal" class="hidden"><div id="modalBox"></div></div>
+
+<div id="chatBg" class="hidden">
+  <div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div>
+</div>
+
+<div id="appScreen" class="hidden">
+
+  <aside id="sidebar">
+    <div class="sideHead">
+      <div class="avatar" id="myAvatar">U</div>
+      <b id="myName">User</b>
+      <button class="iconBtn" id="darkBtn" title="Dark mode">🌙</button>
+      <button class="iconBtn" id="logoutBtn" title="Log out">🚪</button>
+    </div>
+    <div class="sideActions">
+      <button class="pill" id="newChatBtn">✉️ New chat</button>
+      <button class="pill" id="newGroupBtn">👥 New group</button>
+    </div>
+    <div id="chatList"></div>
+  </aside>
+
+  <section id="chatPane">
+    <header>
+      <button class="iconBtn" id="backBtn" title="Back">←</button>
+      <div class="avatar" id="headAvatar">🌍</div>
+      <div class="headInfo">
+        <b id="headTitle">Global Room</b>
+        <small id="headSub"></small>
+      </div>
+      <button class="iconBtn" id="searchBtn" title="Search">🔍</button>
+      <button class="iconBtn" id="wallBtn" title="Wallpaper">🎨</button>
+    </header>
+
+    <div id="offlineBar" class="hidden">You are offline. Messages will be sent when you reconnect.</div>
+    <div id="pinBar" class="hidden"><span>📌</span><span id="pinText"></span><button id="unpinBtn" title="Unpin">✖</button></div>
+
+    <div id="wallPanel" class="hidden">
+      <p>Choose a wallpaper</p>
+      <div class="wallGrid" id="wallGrid"></div>
+    </div>
+
+    <div id="searchBar" class="hidden"><input type="text" id="searchInput" placeholder="Search in this chat..."></div>
+    <div id="messages" class="wp0"></div>
+    <div id="replyBar" class="hidden"><span id="replyBarText"></span><button id="replyCancel">✖</button></div>
+    <div id="emojiBar" class="hidden"></div>
+
+    <div class="inputBar">
+      <button class="roundBtn" id="emojiBtn">😊</button>
+      <button class="roundBtn" id="imgBtn" title="Send a photo">🖼️</button>
+      <input type="file" id="imgFile" accept="image/*" class="hidden">
+      <input type="text" id="msgInput" placeholder="Type a message...">
+      <span id="recText" class="hidden">⏺ 0s</span>
+      <button class="roundBtn" id="micBtn" title="Voice message">🎤</button>
+      <button class="roundBtn" id="sendBtn">➤</button>
+    </div>
+  </section>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
