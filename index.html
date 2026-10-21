@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ChitChat</title>
+<title>ChatNest</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -13,14 +13,16 @@
   <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
   <div class="authBox">
     <div class="logo">💬</div>
-    <h1>ChitChat</h1>
+    <h1>ChatNest</h1>
     <p class="sub" id="authSub">Welcome back! Please log in.</p>
     <input type="text" id="nameInput" placeholder="Full name" class="hidden">
+    <input type="tel" id="phoneInput" placeholder="Phone number (e.g. 0300 1234567)" class="hidden">
     <input type="email" id="emailInput" placeholder="Email address">
     <input type="password" id="passInput" placeholder="Password (min. 6 characters)">
     <div id="authError"></div>
     <button class="mainBtn" id="authBtn">Log in</button>
     <p class="switchText"><span id="switchLink">Create a new account</span></p>
+    <p class="switchText"><span id="forgotLink">Forgot password?</span></p>
   </div>
 </div>
 
@@ -33,7 +35,7 @@
 
 <div id="appScreen" class="hidden">
 
-  <aside id="sidebar">
+    <aside id="sidebar">
     <div class="sideHead">
       <div class="avatar" id="myAvatar">U</div>
       <b id="myName">User</b>
@@ -41,13 +43,13 @@
       <button class="iconBtn" id="logoutBtn" title="Log out">🚪</button>
     </div>
     <div class="sideActions">
-      <button class="pill" id="newChatBtn">✉️ New chat</button>
+      <button class="pill" id="newChatBtn">➕ Add contact</button>
       <button class="pill" id="newGroupBtn">👥 New group</button>
     </div>
     <div id="chatList"></div>
   </aside>
 
-  <section id="chatPane">
+    <section id="chatPane">
     <header>
       <button class="iconBtn" id="backBtn" title="Back">←</button>
       <div class="avatar" id="headAvatar">🌍</div>
