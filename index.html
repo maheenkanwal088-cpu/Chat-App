@@ -2,90 +2,236 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ChatNest</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pingora - Chat Beyond Limits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-theme="emerald" data-mode="light">
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
 
-<div id="authScreen">
-  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-  <div class="authBox">
-    <div class="logo">💬</div>
-    <h1>ChatNest</h1>
-    <p class="sub" id="authSub">Welcome back! Please log in.</p>
-    <input type="text" id="nameInput" placeholder="Full name" class="hidden">
-    <input type="tel" id="phoneInput" placeholder="Phone number (e.g. 0300 1234567)" class="hidden">
-    <input type="email" id="emailInput" placeholder="Email address">
-    <input type="password" id="passInput" placeholder="Password (min. 6 characters)">
-    <div id="authError"></div>
-    <button class="mainBtn" id="authBtn">Log in</button>
-    <p class="switchText"><span id="switchLink">Create a new account</span></p>
-    <p class="switchText"><span id="forgotLink">Forgot password?</span></p>
+<div id="auth">
+  <div class="hero">
+    <div class="brandrow"><div class="logo">💬</div><h1>Pingora</h1></div>
+    <p class="slogan">Chat beyond limits.<br>Talk, call and share moments instantly.</p>
+    <div class="chips"><span>🌍 Global Chat</span><span>📞 Voice Calls</span><span>🎥 Video Calls</span><span>🎨 Wallpapers</span><span>📸 Status</span></div>
+    <div class="fake">
+      <div class="fb l">Hey! Did you try Pingora? 👋</div>
+      <div class="fb r">Yes! The video calls are amazing 🔥</div>
+      <div class="fb l">And the wallpapers 😍</div>
+    </div>
+  </div>
+  <div class="card">
+    <h2 id="aTitle">Welcome back</h2>
+    <p class="tag" id="aSub">Login to continue chatting</p>
+    <div class="switch" id="switch"><button id="tLogin" class="on">Login</button><button id="tSign">Sign Up</button><i></i></div>
+    <form id="authForm" onsubmit="return false">
+      <input id="aName" placeholder="Full name" class="hidden">
+      <input id="aEmail" type="email" placeholder="Email address" required>
+      <input id="aPass" type="password" placeholder="Password (min 6 characters)" minlength="6" required>
+      <button class="primary" id="aBtn">Login</button>
+      <a id="forgot" class="link">Forgot password?</a>
+      <div id="aErr" class="err"></div>
+    </form>
   </div>
 </div>
 
-<div id="lightbox" class="hidden"><img id="lightboxImg" src=""></div>
-<div id="modal" class="hidden"><div id="modalBox"></div></div>
-
-<div id="chatBg" class="hidden">
-  <div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div>
-</div>
-
-<div id="appScreen" class="hidden">
-
-    <aside id="sidebar">
-    <div class="sideHead">
-      <div class="avatar" id="myAvatar">U</div>
-      <b id="myName">User</b>
-      <button class="iconBtn" id="darkBtn" title="Dark mode">🌙</button>
-      <button class="iconBtn" id="logoutBtn" title="Log out">🚪</button>
-    </div>
-    <div class="sideActions">
-      <button class="pill" id="newChatBtn">➕ Add contact</button>
-      <button class="pill" id="newGroupBtn">👥 New group</button>
-    </div>
-    <div id="chatList"></div>
+<div id="app" class="hidden">
+  <aside id="side">
+    <header class="top">
+      <img id="myAv" class="av" title="My profile">
+      <b class="brand">Pingora</b>
+      <button id="themeBtn" class="ic" title="Themes and wallpapers">🎨</button>
+      <button id="logout" class="ic logout-btn" title="Logout">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </button>
+    </header>
+    <nav class="tabs">
+      <button data-tab="chats" class="on">💬 Chats</button>
+      <button data-tab="status">⭕ Status</button>
+      <button data-tab="calls">📞 Calls</button>
+      <button data-tab="contacts">👥 Contacts</button>
+      <button data-tab="profile">👤 Me</button>
+    </nav>
+    <section id="tab-chats" class="tab on">
+      <div class="searchw"><input id="search" placeholder="🔍 Search chats"><button id="newGroup" class="ic ng" title="New group">👥</button></div>
+      <div class="filters" id="filters"><button data-f="all" class="on">All</button><button data-f="unread">Unread</button><button data-f="fav">Favourites</button><button data-f="groups">Groups</button><button data-f="archived">Archived</button></div>
+      <div id="chatList"></div>
+    </section>
+    <section id="tab-status" class="tab">
+      <div class="box">
+        <textarea id="stText" placeholder="What's on your mind?" maxlength="140"></textarea>
+        <div class="swatches" id="stColors"></div>
+        <div class="two">
+          <button class="primary" id="stPost">Post Text</button>
+          <label class="primary alt">📷 Photo<input type="file" id="stImg" accept="image/*" hidden></label>
+        </div>
+      </div>
+      <div id="stList"></div>
+    </section>
+    <section id="tab-calls" class="tab"><div id="callList"></div></section>
+    <section id="tab-contacts" class="tab">
+      <div class="box">
+        <input id="ctEmail" type="email" placeholder="Friend's email address">
+        <button class="primary" id="ctAdd">➕ Save Contact</button>
+      </div>
+      <div id="ctList"></div>
+    </section>
+    <section id="tab-profile" class="tab">
+      <div class="box center">
+        <label class="pic"><img id="pfImg"><span>📷</span><input type="file" id="pfFile" accept="image/*" hidden></label>
+        <input id="pfName" placeholder="Your name">
+        <input id="pfAbout" placeholder="About">
+        <input id="pfEmail" disabled>
+        <button class="primary" id="pfSave">Save Profile</button>
+        <div class="setl">
+          <h3>Privacy and settings</h3>
+          <label class="set"><span>Show last seen and online</span><input type="checkbox" id="stLast"></label>
+          <label class="set"><span>Read receipts (blue ticks)</span><input type="checkbox" id="stRead"></label>
+          <label class="set"><span>Notification sound</span><input type="checkbox" id="stSnd"></label>
+          <button class="ghost" id="stNotif">🔔 Enable desktop notifications</button>
+        </div>
+      </div>
+    </section>
   </aside>
 
-    <section id="chatPane">
-    <header>
-      <button class="iconBtn" id="backBtn" title="Back">←</button>
-      <div class="avatar" id="headAvatar">🌍</div>
-      <div class="headInfo">
-        <b id="headTitle">Global Room</b>
-        <small id="headSub"></small>
-      </div>
-      <button class="iconBtn" id="searchBtn" title="Search">🔍</button>
-      <button class="iconBtn" id="wallBtn" title="Wallpaper">🎨</button>
-    </header>
-
-    <div id="offlineBar" class="hidden">You are offline. Messages will be sent when you reconnect.</div>
-    <div id="pinBar" class="hidden"><span>📌</span><span id="pinText"></span><button id="unpinBtn" title="Unpin">✖</button></div>
-
-    <div id="wallPanel" class="hidden">
-      <p>Choose a wallpaper</p>
-      <div class="wallGrid" id="wallGrid"></div>
+  <main id="main">
+    <div id="empty">
+      <div class="logo big">💬</div>
+      <h2>Pingora Web</h2>
+      <p>Select a chat or join the Global Chat 🌍</p>
     </div>
-
-    <div id="searchBar" class="hidden"><input type="text" id="searchInput" placeholder="Search in this chat..."></div>
-    <div id="messages" class="wp0"></div>
-    <div id="replyBar" class="hidden"><span id="replyBarText"></span><button id="replyCancel">✖</button></div>
-    <div id="emojiBar" class="hidden"></div>
-
-    <div class="inputBar">
-      <button class="roundBtn" id="emojiBtn">😊</button>
-      <button class="roundBtn" id="imgBtn" title="Send a photo">🖼️</button>
-      <input type="file" id="imgFile" accept="image/*" class="hidden">
-      <input type="text" id="msgInput" placeholder="Type a message...">
-      <span id="recText" class="hidden">⏺ 0s</span>
-      <button class="roundBtn" id="micBtn" title="Voice message">🎤</button>
-      <button class="roundBtn" id="sendBtn">➤</button>
+    <div id="chat" class="hidden">
+      <header class="top">
+        <button id="back" class="ic">←</button>
+        <img id="chAv" class="av">
+        <div class="who"><b id="chName"></b><small id="chStat"></small></div>
+        <button id="favBtn" class="ic" title="Favourite">☆</button>
+        <button id="vcall" class="ic" title="Voice call">📞</button>
+        <button id="xcall" class="ic" title="Video call">🎥</button>
+        <button id="moreBtn" class="ic" title="More">⋮</button>
+      </header>
+      <div id="pinBar" class="pinbar hidden"><span>📌</span><div id="pinTxt"></div><button id="pinX">✖</button></div>
+      <div id="callBanner" class="banner hidden"><span id="bnTxt"></span><button id="bnVoice">🎤 Join Voice</button><button id="bnVideo">🎥 Join Video</button></div>
+      <div id="msgs"></div>
+      <div id="replyBar" class="replybar hidden"><div><b id="rpName"></b><span id="rpTxt"></span></div><button id="rpX">✖</button></div>
+      <div id="emojis" class="hidden"></div>
+      <footer class="composer">
+        <div id="attach" class="attach hidden">
+          <label class="ai">🖼 Photo<input type="file" id="imgIn" accept="image/*" hidden></label>
+          <button id="camOpt" class="ai">📷 Camera</button>
+          <button id="locOpt" class="ai">📍 Location</button>
+          <label class="ai">📄 Document<input type="file" id="docIn" hidden></label>
+          <button id="evOpt" class="ai">📅 Event</button>
+          <button id="pollBtn" class="ai">📊 Poll</button>
+                  </div>
+        <button id="emojiBtn" class="ic">😊</button>
+        <button id="attBtn" class="ic">📎</button>
+        <input id="msgIn" placeholder="Type a message" autocomplete="off">
+        <button id="mic" class="send">🎤</button>
+        <button id="send" class="send hidden">➤</button>
+      </footer>
     </div>
-  </section>
+  </main>
 </div>
 
+<div id="callModal" class="modal hidden">
+  <div class="call">
+    <video id="remoteVid" autoplay playsinline></video>
+    <video id="localVid" autoplay playsinline muted></video>
+    <div class="callInfo"><img id="callAv" class="av big"><h2 id="callName"></h2><p id="callState"></p></div>
+    <div class="callBtns">
+      <button id="muteBtn" class="round">🎤</button>
+      <button id="camBtn" class="round">📷</button>
+      <button id="hangBtn" class="round red">📞</button>
+    </div>
+  </div>
+</div>
+
+<div id="incoming" class="modal hidden">
+  <div class="inc">
+    <img id="incAv" class="av big">
+    <h2 id="incName"></h2>
+    <p id="incType"></p>
+    <div class="callBtns"><button id="decBtn" class="round red">✖</button><button id="accBtn" class="round green">✔</button></div>
+  </div>
+</div>
+
+<div id="statusView" class="modal hidden">
+  <div id="svBox">
+    <div class="svBar"><i id="svBar"></i></div>
+    <div class="svTop"><img id="svAv" class="av"><b id="svName"></b><span id="svViews"></span><button id="svClose" class="ic">✖</button></div>
+    <div id="svText"></div>
+  </div>
+</div>
+
+<div id="imgView" class="modal hidden"><img id="imgBig"></div>
+
+<div id="themeModal" class="modal hidden">
+  <div class="box themeBox">
+    <h3>Accent Theme</h3>
+    <div class="swatches" id="themeList"></div>
+    <button class="ghost" id="modeBtn">🌙 Toggle Dark Mode</button>
+    <h3 style="margin-top:18px">Chat Wallpaper</h3>
+    <div class="wpGrid" id="wpGrid"></div>
+    <label class="ghost upl">🖼 Use my own photo<input type="file" id="wpFile" accept="image/*" hidden></label>
+    <button class="primary" id="themeClose" style="margin-top:12px">Done</button>
+  </div>
+</div>
+
+<div id="msgMenu" class="modal hidden"><div class="mm" id="mmBox"></div></div>
+
+<div id="editModal" class="modal hidden">
+  <div class="box themeBox">
+    <h3>✏️ Edit message</h3>
+    <textarea id="editIn" maxlength="1000"></textarea>
+    <div class="two"><button class="ghost" id="editCancel">Cancel</button><button class="primary" id="editSave" style="margin-top:8px">Save</button></div>
+  </div>
+</div>
+
+<div id="pollModal" class="modal hidden">
+  <div class="box themeBox">
+    <h3>📊 Create poll</h3>
+    <input id="pq" placeholder="Ask a question" maxlength="120">
+    <input class="pOpt" placeholder="Option 1" maxlength="60">
+    <input class="pOpt" placeholder="Option 2" maxlength="60">
+    <input class="pOpt" placeholder="Option 3 (optional)" maxlength="60">
+    <input class="pOpt" placeholder="Option 4 (optional)" maxlength="60">
+    <div class="two"><button class="ghost" id="pollCancel">Cancel</button><button class="primary" id="pollGo" style="margin-top:8px">Send Poll</button></div>
+  </div>
+</div>
+
+<div id="groupModal" class="modal hidden">
+  <div class="gcall">
+    <div class="ghead"><b>🌍 Global Call</b><span id="gCount"></span></div>
+    <div id="grid"></div>
+    <div class="callBtns"><button id="gMute" class="round">🎤</button><button id="gCam" class="round">📷</button><button id="gLeave" class="round red">📞</button></div>
+  </div>
+</div>
+
+<div id="grpModal" class="modal hidden"><div class="box themeBox"><h3>👥 New Group</h3><input id="grpName" placeholder="Group name" maxlength="40"><div id="grpPick" class="pick"></div><div class="two"><button class="ghost" id="grpCancel">Cancel</button><button class="primary" id="grpGo" style="margin-top:8px">Create</button></div></div></div>
+
+<div id="nickModal" class="modal hidden"><div class="box themeBox"><h3>✏️ Nickname</h3><p class="tag">Only you can see this name.</p><input id="nickIn" maxlength="30"><div class="two"><button class="ghost" id="nickCancel">Cancel</button><button class="primary" id="nickSave" style="margin-top:8px">Save</button></div></div></div>
+
+<div id="evModal" class="modal hidden"><div class="box themeBox"><h3>📅 Create event</h3><input id="evTitle" placeholder="Event name" maxlength="60"><input id="evWhen" type="datetime-local"><input id="evPlace" placeholder="Location (optional)" maxlength="80"><div class="two"><button class="ghost" id="evCancel">Cancel</button><button class="primary" id="evGo" style="margin-top:8px">Send</button></div></div></div>
+
+<div id="camModal" class="modal hidden"><div class="camBox"><video id="camVid" autoplay playsinline muted></video><div class="callBtns"><button id="camClose" class="round red">✖</button><button id="camSnap" class="round green">📸</button></div></div></div>
+
+<div id="fwdModal" class="modal hidden"><div class="box themeBox"><h3>↪️ Forward to...</h3><div id="fwdList" class="pick tall"></div><button class="ghost" id="fwdClose">Cancel</button></div></div>
+
+<div id="starModal" class="modal hidden"><div class="box themeBox"><h3>⭐ Starred messages</h3><div id="starList" class="pick tall"></div><button class="ghost" id="starClose">Close</button></div></div>
+
+<div id="infoModal" class="modal hidden"><div class="box themeBox center" id="infoBox"></div></div>
+
+<div id="toast"></div>
+<script>
+setTimeout(function(){if(!window.__pgLoaded){var e=document.getElementById('aErr');if(e)e.textContent='App could not start. Open this page using a local server (VS Code Live Server or http://localhost), not by double-clicking the file. Also check your internet connection.'}},2500);
+</script>
 <script type="module" src="app.js"></script>
 </body>
 </html>
