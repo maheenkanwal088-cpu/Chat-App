@@ -43,7 +43,8 @@
       <img id="myAv" class="av" title="My profile">
       <b class="brand">Pingora</b>
       <button id="themeBtn" class="ic" title="Themes and wallpapers">🎨</button>
-      <button id="logout" class="ic logout-btn" title="Logout">
+      <button id="mainMore" class="ic" title="Menu">⋮</button>
+      <button id="logout" class="ic logout-btn hidden" title="Logout">
         <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
           <polyline points="16 17 21 12 16 7"></polyline>
@@ -59,7 +60,7 @@
       <button data-tab="profile">👤 Me</button>
     </nav>
     <section id="tab-chats" class="tab on">
-      <div class="searchw"><input id="search" placeholder="🔍 Search chats"><button id="newGroup" class="ic ng" title="New group">👥</button></div>
+      <div class="searchw"><input id="search" placeholder="🔍 Search chats"><button id="scanBtn" class="ic ng" title="Scan QR code">📷</button><button id="newGroup" class="ic ng" title="New group">👥</button></div>
       <div class="filters" id="filters"><button data-f="all" class="on">All</button><button data-f="unread">Unread</button><button data-f="fav">Favourites</button><button data-f="groups">Groups</button><button data-f="archived">Archived</button></div>
       <div id="chatList"></div>
     </section>
@@ -94,10 +95,18 @@
           <label class="set"><span>Show last seen and online</span><input type="checkbox" id="stLast"></label>
           <label class="set"><span>Read receipts (blue ticks)</span><input type="checkbox" id="stRead"></label>
           <label class="set"><span>Notification sound</span><input type="checkbox" id="stSnd"></label>
+          <button class="ghost" id="lockBtn">🔒 App lock (PIN)</button>
           <button class="ghost" id="stNotif">🔔 Enable desktop notifications</button>
         </div>
       </div>
     </section>
+    <div id="lockedView" class="lockedView hidden">
+    <header class="top"><button id="lvBack" class="ic">←</button><b class="brand">🔒 Locked chats</b><button id="lvMore" class="ic" title="Chat lock settings">⋮</button></header>
+    <div class="lvNote">These chats are hidden from your main list. Opening them needs your PIN.</div>
+    <div class="searchw"><input id="lvSearch" placeholder="🔍 Search locked chats"></div>
+    <div id="lvList"></div>
+  </div>
+  <button id="fab" title="New chat or group">＋</button>
   </aside>
 
   <main id="main">
@@ -117,20 +126,28 @@
         <button id="moreBtn" class="ic" title="More">⋮</button>
       </header>
       <div id="pinBar" class="pinbar hidden"><span>📌</span><div id="pinTxt"></div><button id="pinX">✖</button></div>
+      <div id="csBar" class="csbar hidden"><input id="csIn" placeholder="Search in this chat"><span id="csCnt" class="tag"></span><button id="csUp" class="ic">↑</button><button id="csDn" class="ic">↓</button><button id="csX" class="ic">✖</button></div>
       <div id="callBanner" class="banner hidden"><span id="bnTxt"></span><button id="bnVoice">🎤 Join Voice</button><button id="bnVideo">🎥 Join Video</button></div>
       <div id="msgs"></div>
       <div id="replyBar" class="replybar hidden"><div><b id="rpName"></b><span id="rpTxt"></span></div><button id="rpX">✖</button></div>
+      <div id="mentionBox" class="mentionBox hidden"></div>
       <div id="emojis" class="hidden"></div>
       <footer class="composer">
         <div id="attach" class="attach hidden">
-          <label class="ai">🖼 Photo<input type="file" id="imgIn" accept="image/*" hidden></label>
-          <button id="camOpt" class="ai">📷 Camera</button>
-          <button id="locOpt" class="ai">📍 Location</button>
-          <label class="ai">📄 Document<input type="file" id="docIn" hidden></label>
-          <button id="evOpt" class="ai">📅 Event</button>
-          <button id="pollBtn" class="ai">📊 Poll</button>
+          <label class="ai"><i>🖼</i><span>Photo</span><input type="file" id="imgIn" accept="image/*" hidden></label>
+          <label class="ai"><i>👁</i><span>View once</span><input type="file" id="onceIn" accept="image/*" hidden></label>
+          <button id="camOpt" class="ai"><i>📷</i><span>Camera</span></button>
+          <button id="locOpt" class="ai"><i>📍</i><span>Location</span></button>
+          <label class="ai"><i>📄</i><span>Document</span><input type="file" id="docIn" hidden></label>
+          <button id="evOpt" class="ai"><i>📅</i><span>Event</span></button>
+          <button id="pollBtn" class="ai"><i>📊</i><span>Poll</span></button>
+          <button id="stkOpt" class="ai"><i>🎭</i><span>Sticker</span></button>
+          <button id="gifOpt" class="ai"><i>🎞</i><span>GIF</span></button>
+          <button id="schOpt" class="ai"><i>⏰</i><span>Schedule</span></button>
+          <button id="expOpt" class="ai"><i>💸</i><span>Expense</span></button>
                   </div>
         <button id="emojiBtn" class="ic">😊</button>
+        <button id="smartBtn" class="ic" title="AI smart reply">✨</button>
         <button id="attBtn" class="ic">📎</button>
         <input id="msgIn" placeholder="Type a message" autocomplete="off">
         <button id="mic" class="send">🎤</button>
@@ -167,6 +184,7 @@
     <div class="svBar"><i id="svBar"></i></div>
     <div class="svTop"><img id="svAv" class="av"><b id="svName"></b><span id="svViews"></span><button id="svClose" class="ic">✖</button></div>
     <div id="svText"></div>
+    <div id="svReply" class="svReply hidden"><div class="svEmos"><button>❤️</button><button>😂</button><button>😮</button><button>😢</button><button>👍</button><button>🙏</button></div><div class="svRow"><input id="svReplyIn" placeholder="Reply to status…" maxlength="500" autocomplete="off"><button id="svReplySend">➤</button></div></div>
   </div>
 </div>
 
@@ -214,7 +232,14 @@
   </div>
 </div>
 
-<div id="grpModal" class="modal hidden"><div class="box themeBox"><h3>👥 New Group</h3><input id="grpName" placeholder="Group name" maxlength="40"><div id="grpPick" class="pick"></div><div class="two"><button class="ghost" id="grpCancel">Cancel</button><button class="primary" id="grpGo" style="margin-top:8px">Create</button></div></div></div>
+<div id="grpModal" class="modal hidden"><div class="box themeBox"><h3 id="grpTitle">👥 New Group</h3>
+<div id="grpTop" class="grpTop"><label class="gpic"><img id="grpPrev" alt=""><span>📷</span><input type="file" id="grpPhoto" accept="image/*" hidden></label><input id="grpName" placeholder="Group name" maxlength="40"></div>
+<input id="grpSearch" placeholder="🔍 Search contacts"><div class="tag" id="grpCount"></div>
+<div id="grpPick" class="pick"></div><div class="two"><button class="ghost" id="grpCancel">Cancel</button><button class="primary" id="grpGo" style="margin-top:8px">Create</button></div></div></div>
+
+<div id="qrModal" class="modal hidden"><div class="box themeBox center"><h3 id="qrTitle">QR code</h3><p class="tag" id="qrSub"></p><div class="qrWrap"><img id="qrImg" alt="QR code"></div><input id="qrLink" readonly><div class="two"><button class="ghost" id="qrCopy">📋 Copy link</button><button class="primary" id="qrShare" style="margin-top:8px">📤 Share</button></div><button class="ghost hidden" id="qrReset">🔄 Reset invite link</button><button class="ghost" id="qrClose">Close</button></div></div>
+
+<div id="scanModal" class="modal hidden"><div class="box themeBox center"><h3>📷 Scan QR code</h3><div class="camBox scanBox"><video id="scanVid" playsinline muted style="transform:none"></video><div class="scanFrame"></div></div><p class="tag" id="scanHint"></p><input id="scanPaste" placeholder="Or paste invite link"><div class="two"><button class="ghost" id="scanClose">Close</button><button class="primary" id="scanGo" style="margin-top:8px">Join</button></div></div></div>
 
 <div id="nickModal" class="modal hidden"><div class="box themeBox"><h3>✏️ Nickname</h3><p class="tag">Only you can see this name.</p><input id="nickIn" maxlength="30"><div class="two"><button class="ghost" id="nickCancel">Cancel</button><button class="primary" id="nickSave" style="margin-top:8px">Save</button></div></div></div>
 
@@ -228,7 +253,24 @@
 
 <div id="infoModal" class="modal hidden"><div class="box themeBox center" id="infoBox"></div></div>
 
+<div id="stickerModal" class="modal hidden"><div class="box themeBox"><h3>🎭 Stickers</h3><div id="stkGrid" class="stkGrid"></div><button class="ghost" id="stkClose">Close</button></div></div>
+
+<div id="gifModal" class="modal hidden"><div class="box themeBox"><h3>🎞 GIF</h3><input id="gifQ" placeholder="Search GIFs"><div id="gifGrid" class="gifGrid"></div><p class="tag gifPow">Powered by GIPHY</p><button class="ghost" id="gifClose">Close</button></div></div>
+
+<div id="schModal" class="modal hidden"><div class="box themeBox"><h3>⏰ Schedule message</h3><textarea id="schText" maxlength="1000" placeholder="Message"></textarea><input id="schWhen" type="datetime-local"><p class="tag">Sent automatically at that time while Pingora is open in your browser.</p><div id="schList"></div><div class="two"><button class="ghost" id="schClose">Close</button><button class="primary" id="schGo" style="margin-top:8px">Schedule</button></div></div></div>
+
+<div id="expModal" class="modal hidden"><div class="box themeBox"><h3>💸 Add expense</h3><input id="expTitle" placeholder="What for? (e.g. Dinner)" maxlength="40"><input id="expAmt" type="number" inputmode="decimal" placeholder="Amount (Rs)" min="0"><div class="tag">Paid by</div><select id="expPaid"></select><div class="tag" style="margin-top:8px">Split between</div><div id="expSplit" class="pick"></div><div class="two"><button class="ghost" id="expCancel">Cancel</button><button class="primary" id="expGo" style="margin-top:8px">Add</button></div></div></div>
+
+<div id="balModal" class="modal hidden"><div class="box themeBox"><h3>💸 Group balance</h3><div id="balBody" class="pick tall"></div><div class="two"><button class="ghost" id="balClose">Close</button><button class="primary" id="balShare" style="margin-top:8px">Send to group</button></div></div></div>
+
+<div id="lockedModal" class="modal hidden"><div class="box themeBox"><h3 id="lockedTitle">➕ Choose chats to lock</h3><div id="lockedList" class="pick tall"></div><button class="ghost" id="lockedClose">Close</button></div></div>
+
+<div id="pinModal" class="modal hidden"><div class="box themeBox center"><div class="logo big">🔒</div><h3 id="pinTitle">Enter PIN</h3><input id="pinIn" type="password" inputmode="numeric" placeholder="PIN" maxlength="8" autocomplete="off"><div id="pinErr" class="err"></div><div class="two"><button class="ghost" id="pinCancel">Cancel</button><button class="primary" id="pinOk" style="margin-top:8px">OK</button></div><a id="pinForgot" class="link hidden">Forgot PIN?</a></div></div>
+
+<div id="lockScreen" class="modal hidden"><div class="box themeBox center"><div class="logo big">🔒</div><h3>Pingora is locked</h3><input id="lockIn" type="password" inputmode="numeric" placeholder="Enter PIN" maxlength="8" autocomplete="off"><button class="primary" id="lockGo">Unlock</button><a id="lockForgot" class="link">Forgot PIN? Log out</a><div id="lockErr" class="err"></div></div></div>
+
 <div id="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script>
 setTimeout(function(){if(!window.__pgLoaded){var e=document.getElementById('aErr');if(e)e.textContent='App could not start. Open this page using a local server (VS Code Live Server or http://localhost), not by double-clicking the file. Also check your internet connection.'}},2500);
 </script>
